@@ -1,11 +1,10 @@
-from scipy.stats import entropy
 import math 
-import pathlib 
-from git_parser import calculate
-def calculate_shannon_entropy(repo_path : pathlib.Path) -> int:
-
-
-    # cal lthe calculate fucntion 
-    pass
-entropy = -sum(p * math.log2(p) for p in _ if p > 0)
-# return entropy
+# (-sum(p_i)log_2(p))
+# entropy = -sum(p * math.log2(p) for p in probabilities if p > 0)
+# p(x_i) = 1/loc
+# entropy = sum * probability *math.log2(probability), what do i do for sum????
+def calculate_shannon_entropy(loc_changes : int) -> int:
+    probability = 1 / loc_changes
+    entropy = -loc_changes * probability * math.log2(probability)
+    print(entropy)
+    return entropy
