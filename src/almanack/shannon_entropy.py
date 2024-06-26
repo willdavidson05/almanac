@@ -5,6 +5,9 @@ import math
 # entropy = sum * probability *math.log2(probability), what do i do for sum????
 def calculate_shannon_entropy(loc_changes : int) -> int:
     probability = 1 / loc_changes
-    entropy = -loc_changes * probability * math.log2(probability)
+    # entropy = -loc_changes * (probability * math.log2(probability))
+    entropy = -probability * math.log2(probability)
+    # sum lines of code, which is a constant value
+        # probbabilty is 1/ amount of chnage
     print(entropy)
     return entropy
