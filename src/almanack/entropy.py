@@ -87,9 +87,10 @@ def aggregate_entropy_calculation(
 
     # Calculate total entropy of the repository
     total_entropy = sum(entropy_calculation.values())
-
-    # Normalize total entropy to range [0, 1]
-    max_entropy = len(entropy_calculation) if len(entropy_calculation) > 0 else 1
-    normalized_total_entropy = total_entropy / max_entropy
+    print(total_entropy)
+    # Normalize total entropy by the number of files
+    num_files = len(file_names) 
+    print(num_files)
+    normalized_total_entropy = total_entropy / num_files if num_files > 0 else 0.0
 
     return normalized_total_entropy
