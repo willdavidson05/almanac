@@ -5,46 +5,22 @@ This module calculates Software entropy
 import math
 import pathlib
 from typing import List
+
 import pygit2
+
 from .git_parser import calculate_loc_changes
 
-
-# def get_edited_files(repo: pygit2.Repository, commits: List[pygit2.Commit]) -> List[str]:
-#     """
-#     Finds all files that have been edited in the repository.
-    
-#     Args:
-#         repo (pygit2.Repository): The Git repository.
-#         commits (List[pygit2.Commit]): List of commits in the repository.
-    
-#     Returns:
-#         List[str]: List of file names that have been edited.
-#     """
-#     file_names = set()
-#     for commit in commits:
-#         if commit.parents:
-#             # Get the parent commit to calculate the diff
-#             parent = commit.parents[0]
-#             # Generate the diff between the current commit and its parent
-#             diff = repo.diff(parent, commit)
-#             # Iterate over each file change (patch) in the diff
-#             for patch in diff:
-#                 # Add the old file path to the set if it exists
-#                 if patch.delta.old_file.path:
-#                     file_names.add(patch.delta.old_file.path)
-#                 # Add the new file path to the set if it exists
-#                 if patch.delta.new_file.path:
-#                     file_names.add(patch.delta.new_file.path)
-#     return file_names
-def get_edited_files(repo: pygit2.Repository, source_commit: pygit2.Commit, target_commit: pygit2.Commit) -> List[str]:
+def get_edited_files(
+    repo: pygit2.Repository, source_commit: pygit2.Commit, target_commit: pygit2.Commit
+) -> List[str]:
     """
     Finds all files that have been edited between two specific commits.
-    
+
     Args:
         repo (pygit2.Repository): The Git repository.
         source_commit (pygit2.Commit): The source commit.
         target_commit (pygit2.Commit): The target commit.
-    
+
     Returns:
         List[str]: List of file names that have been edited between the two commits.
     """
@@ -56,6 +32,7 @@ def get_edited_files(repo: pygit2.Repository, source_commit: pygit2.Commit, targ
         if patch.delta.new_file.path:
             file_names.add(patch.delta.new_file.path)
     return list(file_names)
+
 
 def calculate_normalized_entropy(
     repo_path: pathlib.Path,
