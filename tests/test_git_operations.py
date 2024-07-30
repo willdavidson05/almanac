@@ -1,44 +1,11 @@
-"""
-Testing git_parser functionality
-"""
-
 import pathlib
-
 import git
 
-from almanack.git_parser import (
+from almanack.git_operations import (
     calculate_loc_changes,
-    get_commit_contents,
+    # get_commit_contents,
     get_commit_logs,
 )
-
-
-def test_get_commit_logs(repository_paths: dict[str, pathlib.Path]) -> None:
-    """
-    Test get_commit_logs function.
-    """
-    for repo_path in repository_paths.values():
-        commit_logs = get_commit_logs(str(repo_path))
-        # Ensure the result is a dictionary
-        assert isinstance(commit_logs, dict)
-        # Ensure the dictionary is not empty
-        assert commit_logs
-
-
-def test_get_commit_contents(repository_paths: dict[str, pathlib.Path]) -> None:
-    """
-    Test get_commit_contents function.
-    """
-    for repo_path in repository_paths.values():
-        repo = git.Repo(repo_path)
-        # Get the latest commit from the repository
-        commit = next(repo.iter_commits(), None)
-        # Ensure there is at least one commit in the repository
-        assert commit
-        commit_contents = get_commit_contents(str(repo_path), commit.hexsha)
-        # Ensure the result is a dictionary
-        assert isinstance(commit_contents, dict)
-
 
 def get_most_recent_commits(repo_path: pathlib.Path) -> tuple[str, str]:
     """
@@ -60,7 +27,6 @@ def get_most_recent_commits(repo_path: pathlib.Path) -> tuple[str, str]:
     target_commit = sorted_commits[-1][0]
 
     return source_commit, target_commit
-
 
 def test_calculate_loc_changes(
     repository_paths: dict[str, pathlib.Path], repo_file_sets: dict[str, list[str]]

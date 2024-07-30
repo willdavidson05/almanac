@@ -1,38 +1,10 @@
-"""
-This module calculates Software entropy
-"""
-
 import math
 import pathlib
-from typing import List
-
+from typing import List, Dict
 import pygit2
 
-from .git_parser import calculate_loc_changes
+from .git_operations import get_loc_changed
 
-
-def get_edited_files(
-    repo: pygit2.Repository, source_commit: pygit2.Commit, target_commit: pygit2.Commit
-) -> List[str]:
-    """
-    Finds all files that have been edited between two specific commits.
-
-    Args:
-        repo (pygit2.Repository): The Git repository.
-        source_commit (pygit2.Commit): The source commit.
-        target_commit (pygit2.Commit): The target commit.
-
-    Returns:
-        List[str]: List of file names that have been edited between the two commits.
-    """
-    file_names = set()
-    diff = repo.diff(source_commit, target_commit)
-    for patch in diff:
-        if patch.delta.old_file.path:
-            file_names.add(patch.delta.old_file.path)
-        if patch.delta.new_file.path:
-            file_names.add(patch.delta.new_file.path)
-    return list(file_names)
 
 
 def calculate_normalized_entropy(
@@ -62,7 +34,7 @@ def calculate_normalized_entropy(
         changes, helping identify potentially unstable code areas.
 
     """
-    loc_changes = calculate_loc_changes(
+    loc_changes = get_loc_changed(
         repo_path, source_commit, target_commit, file_names
     )
     # Calculate total lines of code changes across all specified files
