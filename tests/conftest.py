@@ -76,7 +76,7 @@ def build_jupyter_book(
     return jupyter_book_test_target
 
 
-from data.almanack.entropy.add_data import create_repositories
+from data.almanack.repo_setup.create_repo import create_repositories
 
 
 @pytest.fixture(scope="session")
@@ -92,8 +92,23 @@ def repository_paths(tmp_path_factory):
     create_repositories(base_path)
 
     repositories = {
-        "high_entropy": base_path / "high_entropy",
-        "low_entropy": base_path / "low_entropy",
+        "3_file_repo": base_path / "3_file_repo",
+        "1_file_repo": base_path / "1_file_repo",
     }
 
     yield repositories
+
+
+@pytest.fixture
+def repo_file_sets():
+    """
+    Provides a mapping of test repository names to lists of file names.
+
+    Returns:
+        dict[str, list[str]]: A dictionary where the keys are repository names
+        and the values are lists of file names in those repositories.
+    """
+    return {
+        "3_file_repo": ["file_1.md", "file_2.md", "file_3.md"],
+        "1_file_repo": ["file_1.md"],
+    }
