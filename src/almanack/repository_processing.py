@@ -1,12 +1,17 @@
+"""
+This module processes GitHub repositories
+"""
+
 import shutil
 import tempfile
 from datetime import datetime, timezone
-from typing import Dict, List
+
 import pygit2
 
+from .data_management import print_entropy_report, save_entropy_to_json
+from .entropy import aggregate_entropy_calculation, calculate_normalized_entropy
 from .git_operations import clone_repository, get_commits, get_edited_files
-from .entropy import calculate_normalized_entropy, aggregate_entropy_calculation
-from .data_management import save_entropy_to_json, print_entropy_report
+
 
 def process_repository(repo_url: str, output_path: str) -> None:
     """

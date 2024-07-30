@@ -1,11 +1,13 @@
-import pathlib
-import git
+"""
+Test git operations functionality
+"""
 
-from almanack.git_operations import (
-    calculate_loc_changes,
-    # get_commit_contents,
-    get_commit_logs,
-)
+import pathlib
+
+import pygit2
+
+from almanack.git_operations import get_commits, get_loc_changed
+
 
 def get_most_recent_commits(repo_path: pathlib.Path) -> tuple[str, str]:
     """
@@ -17,18 +19,17 @@ def get_most_recent_commits(repo_path: pathlib.Path) -> tuple[str, str]:
     Returns:
         tuple[str, str]: Tuple containing the source and target commit hashes.
     """
-    commit_logs = get_commit_logs(repo_path)
+    repo = pygit2.Repository(str(repo_path))
+    commits = get_commits(repo)
 
-    # Sort commits by their timestamp to get the two most recent ones
-    sorted_commits = sorted(commit_logs.items(), key=lambda item: item[1]["timestamp"])
+    # Assumes that commits are sorted by time, with the most recent first
+    source_commit = commits[1]  # Second most recent
+    target_commit = commits[0]  # Most recent
 
-    # Get the commit hashes of the two most recent commits
-    source_commit = sorted_commits[-2][0]
-    target_commit = sorted_commits[-1][0]
+    return str(source_commit.id), str(target_commit.id)
 
-    return source_commit, target_commit
 
-def test_calculate_loc_changes(
+def test_get_loc_changed(
     repository_paths: dict[str, pathlib.Path], repo_file_sets: dict[str, list[str]]
 ) -> None:
     """
@@ -41,7 +42,7 @@ def test_calculate_loc_changes(
         # Extract two most recent commits: source and target
         source_commit, target_commit = get_most_recent_commits(repo_path)
         # Call loc_changes function on test repositories
-        loc_changes = calculate_loc_changes(
+        loc_changes = get_loc_changed(
             repo_path, source_commit, target_commit, repo_file_sets[label]
         )
         results[label] = loc_changes

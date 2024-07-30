@@ -1,7 +1,13 @@
+"""
+This module performs git operations
+"""
+
 import pathlib
-from typing import List, Dict
-import pygit2
 import tempfile
+from typing import Dict, List
+
+import pygit2
+
 
 def clone_repository(repo_url: str) -> pathlib.Path:
     """
@@ -37,6 +43,7 @@ def get_commits(repo: pygit2.Repository) -> List[pygit2.Commit]:
 
     return commits
 
+
 def get_edited_files(
     repo: pygit2.Repository, source_commit: pygit2.Commit, target_commit: pygit2.Commit
 ) -> List[str]:
@@ -59,6 +66,7 @@ def get_edited_files(
         if patch.delta.new_file.path:
             file_names.add(patch.delta.new_file.path)
     return list(file_names)
+
 
 def get_loc_changed(
     repo_path: pathlib.Path, source: str, target: str, file_names: List[str]
@@ -103,4 +111,3 @@ def get_loc_changed(
             changes[patch.delta.new_file.path] = lines_changed
 
     return changes
-

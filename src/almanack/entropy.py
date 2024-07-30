@@ -1,10 +1,13 @@
+"""
+This module calculates software entropy
+"""
+
 import math
 import pathlib
-from typing import List, Dict
-import pygit2
+from typing import List
+
 
 from .git_operations import get_loc_changed
-
 
 
 def calculate_normalized_entropy(
@@ -34,9 +37,7 @@ def calculate_normalized_entropy(
         changes, helping identify potentially unstable code areas.
 
     """
-    loc_changes = get_loc_changed(
-        repo_path, source_commit, target_commit, file_names
-    )
+    loc_changes = get_loc_changed(repo_path, source_commit, target_commit, file_names)
     # Calculate total lines of code changes across all specified files
     total_changes = sum(loc_changes.values())
 

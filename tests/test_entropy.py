@@ -2,11 +2,12 @@
 Testing entropy functionality
 """
 
-
 import pathlib
 
+from test_git_operations import get_most_recent_commits
+
 from almanack.entropy import aggregate_entropy_calculation, calculate_normalized_entropy
-from .test_git_operations import get_most_recent_commits
+
 
 def test_calculate_normalized_entropy(
     repository_paths: dict[str, pathlib.Path], repo_file_sets: dict[str, list[str]]

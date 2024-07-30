@@ -1,3 +1,7 @@
+"""
+This module prccesess data
+"""
+
 import json
 from typing import Dict
 
@@ -66,4 +70,3 @@ def print_entropy_report(output_path: str) -> None:
 
     # Print the report footer
     print(border)
-

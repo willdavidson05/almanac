@@ -1,8 +1,9 @@
 """
-Testing repo_helper functionality
+Testing repository_processing functionality
 """
 
 from almanack.repository_processing import process_repository
+
 
 def test_repo_helper() -> None:
     """
