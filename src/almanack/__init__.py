@@ -2,7 +2,7 @@
 
 from .book import read
 from .entropy import aggregate_entropy_calculation, calculate_normalized_entropy
-from .repo_helper import process_repository
+from .repo_helper import process_repo_to_parquet
 
 # note: version placeholder is updated during build
 # by poetry-dynamic-versioning.

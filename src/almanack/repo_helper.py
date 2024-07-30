@@ -91,7 +91,7 @@ def save_entropy_to_json(repo_url: str, file_level_entropy: Dict[str, float], no
     with open(output_path, 'w') as json_file:
         json.dump(data, json_file, indent=4)
 
-def print_entropy_from_json(output_path: str) -> None:
+def print_entropy_report(output_path: str) -> None:
     """
     Prints the entropy values from a JSON file.
     
@@ -138,7 +138,7 @@ def process_repository(repo_url: str, output_path: str) -> None:
         )
 
         save_entropy_to_json(repo_url, file_level_entropy, normalized_total_entropy, output_path)
-        print_entropy_from_json(output_path)
+        print_entropy_report(output_path)
 
     except Exception as e:
         print(f"Error processing repository {repo_url}: {e}")
