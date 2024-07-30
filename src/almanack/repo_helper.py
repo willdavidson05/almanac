@@ -3,11 +3,11 @@ import pathlib
 import shutil
 import tempfile
 from datetime import datetime, timezone
-from typing import Dict, List, Union
+from typing import Dict, List
 
 import pygit2
 
-from .entropy import calculate_normalized_entropy, aggregate_entropy_calculation
+from .entropy import calculate_normalized_entropy, aggregate_entropy_calculation, get_edited_files
 
 def clone_repository(repo_url: str) -> pathlib.Path:
     """
@@ -40,34 +40,6 @@ def get_commits(repo: pygit2.Repository) -> List[pygit2.Commit]:
     
     return commits
 
-def get_edited_files(repo: pygit2.Repository, commits: List[pygit2.Commit]) -> List[str]:
-    """
-    Finds all files that have been edited in the repository.
-    
-    Args:
-        repo (pygit2.Repository): The Git repository.
-        commits (List[pygit2.Commit]): List of commits in the repository.
-    
-    Returns:
-        List[str]: List of file names that have been edited.
-    """
-    file_names = set()
-    for commit in commits:
-        if commit.parents:
-            # Get the parent commit to calculate the diff
-            parent = commit.parents[0]
-            # Generate the diff between the current commit and its parent
-            diff = repo.diff(parent, commit)
-            # Iterate over each file change (patch) in the diff
-            for patch in diff:
-                # Add the old file path to the set if it exists
-                if patch.delta.old_file.path:
-                    file_names.add(patch.delta.old_file.path)
-                # Add the new file path to the set if it exists
-                if patch.delta.new_file.path:
-                    file_names.add(patch.delta.new_file.path)
-    return list(file_names)
-
 def save_entropy_to_json(repo_url: str, file_level_entropy: Dict[str, float], normalized_total_entropy: float, output_path: str) -> None:
     """
     Saves the entropy values and the top 5 files with the most entropy to a JSON file.
@@ -85,7 +57,7 @@ def save_entropy_to_json(repo_url: str, file_level_entropy: Dict[str, float], no
         "repo_url": repo_url,
         "total_normalized_entropy": normalized_total_entropy,
         "file_level_entropy": file_level_entropy,
-        "top_5_files_with_most_entropy": sorted_files_by_entropy
+        "5_files_with_most_entropy": sorted_files_by_entropy
     }
 
     with open(output_path, 'w') as json_file:
@@ -100,12 +72,28 @@ def print_entropy_report(output_path: str) -> None:
     """
     with open(output_path, 'r') as json_file:
         data = json.load(json_file)
+
+    border = "=" * 50
+    separator = "-" * 50
+    title = "Entropy Report"
+
+    print(border)
+    print(f"{title:^50}")  # Centers the title
+    print(border)
     
+    # Print repository details
     print(f"Repository URL: {data['repo_url']}")
     print(f"Total Normalized Entropy: {data['total_normalized_entropy']:.4f}")
-    print("Top 5 Files with Most Entropy:")
-    for file_name, entropy in data['top_5_files_with_most_entropy']:
-        print(f"  {file_name}: {entropy:.4f}")
+    
+    # Print top 5 files with most entropy
+    print("\nTop 5 Files with Most Entropy:")
+    print(separator)
+    for file_name, entropy in data['5_files_with_most_entropy']:
+        print(f"  {file_name:<40} {entropy:>8.4f}")
+    print(separator)
+    
+    # Print the report footer
+    print(border)
 
 def process_repository(repo_url: str, output_path: str) -> None:
     """
@@ -127,7 +115,7 @@ def process_repository(repo_url: str, output_path: str) -> None:
         most_recent_commit = commits[0]
         second_most_recent_commit = commits[1]
         
-        file_names = get_edited_files(repo, commits)
+        file_names = get_edited_files(repo, second_most_recent_commit, most_recent_commit)
         
         normalized_total_entropy = aggregate_entropy_calculation(
             repo_path, str(second_most_recent_commit.id), str(most_recent_commit.id), file_names
