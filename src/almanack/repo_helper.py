@@ -146,3 +146,48 @@ def process_repository(repo_url: str, output_path: str) -> None:
     finally:
         shutil.rmtree(temp_dir)
 
+
+def process_repo_to_parquet(repo_url: str):  # Tuple[Union[float, None], Union[str, None], Union[str, None], Union[int, None]] 
+    """
+    Processes a GitHub repository URL to calculate entropy and other metadata.
+
+    Args:
+        repo_url (str): The URL of the GitHub repository.
+
+    Returns:
+        tuple: A tuple containing the normalized total entropy, the date of the first commit,
+               the date of the most recent commit, and the total time of existence in days.
+    """
+    temp_dir = tempfile.mkdtemp()
+    try:
+        repo_path = clone_repository(repo_url)
+        repo = pygit2.Repository(str(repo_path))
+
+        commits = get_commits(repo)
+
+        first_commit = commits[-1]
+        most_recent_commit = commits[0]
+
+        time_of_existence = (most_recent_commit.commit_time - first_commit.commit_time) // (24 * 3600)
+
+        first_commit_date = datetime.fromtimestamp(first_commit.commit_time, tz=timezone.utc).date().isoformat()
+        most_recent_commit_date = datetime.fromtimestamp(most_recent_commit.commit_time, tz=timezone.utc).date().isoformat()
+
+        file_names = get_edited_files(repo, commits)
+
+        normalized_total_entropy = aggregate_entropy_calculation(
+            repo_path, str(first_commit.id), str(most_recent_commit.id), file_names
+        )
+
+        return (
+            normalized_total_entropy,
+            first_commit_date,
+            most_recent_commit_date,
+            time_of_existence,
+        )
+
+    except Exception:
+        return None, None, None, None
+
+    finally:
+        shutil.rmtree(temp_dir)
