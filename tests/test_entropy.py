@@ -6,22 +6,48 @@ import pathlib
 
 from test_git_parser import get_most_recent_commits
 
-from almanack.entropy import calculate_normalized_entropy
+from almanack.entropy import aggregate_entropy_calculation, calculate_normalized_entropy
 
 
-def test_normalized_entropy(repository_paths: dict[str, pathlib.Path]) -> None:
+def test_calculate_normalized_entropy(
+    repository_paths: dict[str, pathlib.Path], repo_file_sets: dict[str, list[str]]
+) -> None:
     """
-    Test calculate_shannon_entropy function.
+    Test the calculate_normalized_entropy function.
     """
-    file_sets = {
-        "high_entropy": ["high_entropy2.md", "high_entropy.md"],
-        "low_entropy": ["low_entropy.md"],
-    }
     for label, repo_path in repository_paths.items():
+        # Extract two most recent commits: source and target
         source_commit, target_commit = get_most_recent_commits(repo_path)
+
+        # Call calculate_normalized_entropy function
         entropies = calculate_normalized_entropy(
-            repo_path, source_commit, target_commit, file_sets[label]
+            repo_path, source_commit, target_commit, repo_file_sets[label]
         )
 
-        for _, entropy in entropies.items():
-            assert entropy >= 0  # Check if entropy is negative
+        assert entropies  # Check if the entropies dictionary is not empty
+
+        for entropy in entropies.values():
+            assert (
+                0 <= entropy <= 1
+            )  # Check if entropy is non-negative and within normalized range of [0,1]
+
+
+def test_aggregate_entropy_different_repos(
+    repository_paths: dict[str, pathlib.Path], repo_file_sets: dict[str, list[str]]
+) -> None:
+    """
+    Test that aggregate_entropy_calculation function
+    """
+    repo_entropies = {}
+
+    for label, repo_path in repository_paths.items():
+        # Extract two most recent commits: source and target
+        source_commit, target_commit = get_most_recent_commits(repo_path)
+        # Call calculate_normalized_entropy function
+        normalized_entropy = aggregate_entropy_calculation(
+            repo_path, source_commit, target_commit, repo_file_sets[label]
+        )
+        repo_entropies[label] = normalized_entropy
+
+    # Ensure that repositories with different entropy levels have different aggregated scores
+    assert repo_entropies["3_file_repo"] > repo_entropies["1_file_repo"]
