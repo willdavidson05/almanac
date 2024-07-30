@@ -10,6 +10,7 @@ import pygit2
 
 from .git_parser import calculate_loc_changes
 
+
 def get_edited_files(
     repo: pygit2.Repository, source_commit: pygit2.Commit, target_commit: pygit2.Commit
 ) -> List[str]:
