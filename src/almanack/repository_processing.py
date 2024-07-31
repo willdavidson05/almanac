@@ -12,7 +12,6 @@ import pygit2
 from .data_management import save_entropy_to_json
 from .entropy import aggregate_entropy_calculation
 from .git_operations import clone_repository, get_commits, get_edited_files
-from .report import repo_entropy_report
 
 
 def process_entire_repo(repo_path: str, output_path: str) -> None:
@@ -53,15 +52,13 @@ def process_entire_repo(repo_path: str, output_path: str) -> None:
 
         save_entropy_to_json(str(repo_path), normalized_total_entropy, output_path)
 
-        repo_entropy_report(output_path)
-
     except Exception as e:
         print(f"Error processing repository {repo_path}: {e}")
 
 
 def process_repo_for_analysis(
     repo_url: str,
-):  # Tuple[Union[float, None], Union[str, None], Union[str, None], Union[int, None]]
+):
     """
     Processes a GitHub repository URL to calculate entropy and other metadata.
     This is used to prepare data for analysis, particularly for the seedbank notebook

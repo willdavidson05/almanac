@@ -45,7 +45,7 @@ jupyterlab-spellchecker = "^0.8.4"
 
 
 [tool.poetry.scripts]
-repo-entropy = "almanack_cli:repo_entropy"
+repo_entropy = "almanack.cli:repo_entropy"
 
 
 [tool.isort]
