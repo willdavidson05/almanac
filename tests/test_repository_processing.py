@@ -13,11 +13,11 @@ def test_process_entire_repo(repository_paths: dict[str, pathlib.Path]) -> None:
     """
     Test process_entire_repo function.
     """
-    # Define the relative path for the output file
-    relative_output_path = "src/almanack/entropy_report.json"
+    # Define the relative path for the output file within the target directory
+    relative_output_path = "data/almanack/entropy_report.json"
 
-    # Resolve the absolute path for the output file relative to the project root
-    output_path = pathlib.Path(__file__).parent.parent / relative_output_path
+    # Resolve the absolute path for the output file relative to the test directory
+    output_path = pathlib.Path(__file__).parent / relative_output_path
 
     for _, repo_path in repository_paths.items():
         # Create a temporary directory for testing

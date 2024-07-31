@@ -29,6 +29,11 @@ def repo_entropy(repo_path: str, output_path: str = "entropy_report.json") -> No
     # Generate and print the report
     repo_entropy_report(output_path)
 
+    # Delete the JSON file after the report is generated and printed
+    json_path = pathlib.Path(output_path)
+    if json_path.exists():
+        json_path.unlink()  # Remove the file
+
 
 if __name__ == "__main__":
     fire.Fire(repo_entropy)
