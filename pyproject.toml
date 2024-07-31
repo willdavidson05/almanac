@@ -43,7 +43,6 @@ kaleido = "0.2.1"
 pygithub = "^2.3.0"
 jupyterlab-spellchecker = "^0.8.4"
 
-
 [tool.poetry.scripts]
 repo_entropy = "almanack.cli:repo_entropy"
 
