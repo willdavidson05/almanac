@@ -3,7 +3,7 @@ This module prccesess data
 """
 
 import json
-from typing import Dict
+
 
 def save_entropy_to_json(
     repo_path: str,
@@ -25,4 +25,3 @@ def save_entropy_to_json(
 
     with open(output_path, "w") as json_file:
         json.dump(data, json_file, indent=4)
-

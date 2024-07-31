@@ -1,10 +1,9 @@
 """
 This module creates entropy reports
 """
+
 import json
-from typing import Dict
-import json
-from typing import Dict
+
 
 def repo_entropy_report(output_path: str) -> None:
     """
@@ -26,8 +25,10 @@ def repo_entropy_report(output_path: str) -> None:
 
     # Print repository details
     print(f"Repository Path: {data['repo_path']}")
-    print(f"Total Repository Normalized Entropy: {data['total_normalized_entropy']:.4f}")
-    
+    print(
+        f"Total Repository Normalized Entropy: {data['total_normalized_entropy']:.4f}"
+    )
+
     print(separator)
 
     # Print the report footer

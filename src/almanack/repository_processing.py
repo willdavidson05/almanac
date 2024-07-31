@@ -2,21 +2,18 @@
 This module processes GitHub repositories
 """
 
+import pathlib
 import shutil
 import tempfile
 from datetime import datetime, timezone
-import pathlib
 
 import pygit2
-from .report import repo_entropy_report
+
 from .data_management import save_entropy_to_json
 from .entropy import aggregate_entropy_calculation
 from .git_operations import clone_repository, get_commits, get_edited_files
+from .report import repo_entropy_report
 
-
-import pathlib
-import shutil
-import tempfile
 
 def process_entire_repo(repo_path: str, output_path: str) -> None:
     """
@@ -55,11 +52,7 @@ def process_entire_repo(repo_path: str, output_path: str) -> None:
         #     file_names,
         # )
 
-        save_entropy_to_json(
-            str(repo_path),
-            normalized_total_entropy,
-            output_path
-        )
+        save_entropy_to_json(str(repo_path), normalized_total_entropy, output_path)
 
         repo_entropy_report(output_path)
 
@@ -70,13 +63,11 @@ def process_entire_repo(repo_path: str, output_path: str) -> None:
         shutil.rmtree(temp_dir)
 
 
-
-
 def process_repo_for_analysis(
     repo_url: str,
 ):  # Tuple[Union[float, None], Union[str, None], Union[str, None], Union[int, None]]
     """
-    Processes a GitHub repository URL to calculate entropy and other metadata. 
+    Processes a GitHub repository URL to calculate entropy and other metadata.
     This is used to prepare data for analysis, particularly for the seedbank notebook
     that process PUBMED repositories.
     Args:

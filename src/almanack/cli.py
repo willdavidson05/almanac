@@ -1,5 +1,7 @@
 import fire
+
 from almanack.report import repo_entropy_report
+
 
 def repo_entropy(repo_path: str) -> None:
     """
@@ -10,6 +12,7 @@ def repo_entropy(repo_path: str) -> None:
     """
     report = repo_entropy_report(repo_path)
     print(report)
+
 
 if __name__ == "__main__":
     fire.Fire(repo_entropy)

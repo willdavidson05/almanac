@@ -6,7 +6,6 @@ import math
 import pathlib
 from typing import List
 
-
 from .git_operations import get_loc_changed
 
 

@@ -1,6 +1,9 @@
-from almanack. data_management import save_entropy_to_json
-import tempfile 
 import json
+import tempfile
+
+from almanack.data_management import save_entropy_to_json
+
+
 def test_save_entropy_to_json():
     # Define test inputs
     repo_path = "test_repo_path"
@@ -12,9 +15,9 @@ def test_save_entropy_to_json():
 
     # Call the function with the temporary file path
     save_entropy_to_json(repo_path, normalized_total_entropy, temp_file_path)
-    
+
     # Read the file to check if it has content
-    with open(temp_file_path, 'r') as file:
+    with open(temp_file_path, "r") as file:
         content = json.load(file)
 
     # Check if json file is non-emtpy
