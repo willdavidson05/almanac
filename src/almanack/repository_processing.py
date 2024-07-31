@@ -60,9 +60,10 @@ def process_repo_for_analysis(
     repo_url: str,
 ):
     """
-    Processes a GitHub repository URL to calculate entropy and other metadata.
+    Processes GitHub repository URL's to calculate entropy and other metadata.
     This is used to prepare data for analysis, particularly for the seedbank notebook
     that process PUBMED repositories.
+
     Args:
         repo_url (str): The URL of the GitHub repository.
 

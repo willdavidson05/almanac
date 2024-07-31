@@ -1,3 +1,8 @@
+"""
+Setup repo_entropy CLI through python-fire
+"""
+
+
 import pathlib
 
 import fire
@@ -11,8 +16,8 @@ def repo_entropy(repo_path: str, output_path: str = "entropy_report.json") -> No
     CLI entry point to process a repository and generate an entropy report.
 
     Args:
-        repo_path (str | None, optional): The local path to the Git repository. Defaults to None, which uses the current working directory.
-        output_path (str, optional): Path to the output JSON file. Defaults to "entropy_report.json".
+        repo_path (str): The local path to the Git repository.
+        output_path (str, optional): Path to the output JSON file.Currently is "entropy_report.json".
     """
 
     repo_path = pathlib.Path.cwd()  # Use the current working directory

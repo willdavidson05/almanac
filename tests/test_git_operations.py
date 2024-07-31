@@ -3,7 +3,7 @@ Test git operations functionality
 """
 
 import pathlib
-
+from typing import Any
 import pygit2
 
 from almanack.git_operations import (
@@ -15,7 +15,7 @@ from almanack.git_operations import (
 )
 
 
-def test_clone_repository(repository_paths):
+def test_clone_repository(repository_paths: dict[str, Any]):
     repo_path = repository_paths["3_file_repo"]
 
     # Call the function
@@ -25,7 +25,7 @@ def test_clone_repository(repository_paths):
     assert cloned_path.exists()
 
 
-def test_get_commits(repository_paths):
+def test_get_commits(repository_paths: dict[str, Any]):
     # Open the repo
     repo_path = repository_paths["3_file_repo"]
     repo = pygit2.Repository(str(repo_path))
@@ -39,7 +39,7 @@ def test_get_commits(repository_paths):
     assert len(commits) > 0
 
 
-def test_get_edited_files(repository_paths):
+def test_get_edited_files(repository_paths: dict[str, Any]):
     # Open the repo
     repo_path = repository_paths["3_file_repo"]
     repo = pygit2.Repository(str(repo_path))
@@ -81,7 +81,7 @@ def test_get_loc_changed(
     )  # Check that all values are non-negative
 
 
-def test_get_most_recent_commits(repository_paths):
+def test_get_most_recent_commits(repository_paths: dict[str, Any]):
     repo_path = repository_paths["3_file_repo"]
 
     # Call the function to get the two most recent commits

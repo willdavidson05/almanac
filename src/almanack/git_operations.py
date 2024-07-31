@@ -64,20 +64,15 @@ def get_edited_files(
         List[str]: List of file names that have been edited between the two commits.
     """
     # Create a set to store unique file names that have been edited
-
     file_names = set()
     # Get the differences (diff) between the source and target commits
-
     diff = repo.diff(source_commit, target_commit)
     # Iterate through each patch in the diff
-
     for patch in diff:
         # If the old file path is present, add it to the set
-
         if patch.delta.old_file.path:
             file_names.add(patch.delta.old_file.path)
         # If the new file path is present, add it to the set
-
         if patch.delta.new_file.path:
             file_names.add(patch.delta.new_file.path)
     return list(file_names)
