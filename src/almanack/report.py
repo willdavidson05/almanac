@@ -1,4 +1,6 @@
-
+"""
+This module creates entropy reports
+"""
 import json
 from typing import Dict
 import json

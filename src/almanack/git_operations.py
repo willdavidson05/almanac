@@ -103,3 +103,23 @@ def get_loc_changed(
             changes[patch.delta.new_file.path] = lines_changed
 
     return changes
+
+def get_most_recent_commits(repo_path: pathlib.Path) -> tuple[str, str]:
+    """
+    Retrieves the two most recent commit hashes in the test repositories
+
+    Args:
+        repo_path (pathlib.Path): The path to the git repository.
+
+    Returns:
+        tuple[str, str]: Tuple containing the source and target commit hashes.
+    """
+    repo = pygit2.Repository(str(repo_path))
+    commits = get_commits(repo)
+
+    # Assumes that commits are sorted by time, with the most recent first
+    source_commit = commits[1]  # Second most recent
+    target_commit = commits[0]  # Most recent
+
+    return str(source_commit.id), str(target_commit.id)
+
