@@ -16,14 +16,14 @@ from .git_operations import clone_repository, get_commits, get_edited_files
 
 def process_entire_repo(repo_path: str, output_path: str) -> None:
     """
-    Processes a local repository path to calculate entropy and other metadata.
+    Processes a repository path to calculate entropy.
 
     Args:
         repo_path (str): The local path to the Git repository.
         output_path (str): Path to the output JSON file.
 
     Returns:
-        None: Saves the entropy data to a JSON file and prints it.
+        None: Saves the entropy data to a JSON file.
     """
     try:
         repo_path = pathlib.Path(repo_path).resolve()

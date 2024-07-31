@@ -19,8 +19,11 @@ def clone_repository(repo_url: str) -> pathlib.Path:
     Returns:
         pathlib.Path: Path to the cloned repository.
     """
+    # Create a temporary directory to store the cloned repository
     temp_dir = tempfile.mkdtemp()
+    # Define the path for the cloned repository within the temporary directory
     repo_path = pathlib.Path(temp_dir) / "repo"
+    # Clone the repository from the given URL into the defined path
     pygit2.clone_repository(repo_url, str(repo_path))
     return repo_path
 
@@ -35,10 +38,13 @@ def get_commits(repo: pygit2.Repository) -> List[pygit2.Commit]:
     Returns:
         List[pygit2.Commit]: List of commits in the repository.
     """
+    # Get the latest commit (HEAD) from the repository
     head = repo.revparse_single("HEAD")
+    # Create a walker to iterate over commits starting from the HEAD
     walker = repo.walk(
         head.id, pygit2.GIT_SORT_NONE
     )  # Use GIT_SORT_NONE to ensure all commits are included
+    # Collect all commits from the walker into a list
     commits = [commit for commit in walker]
     return commits
 
@@ -57,11 +63,21 @@ def get_edited_files(
     Returns:
         List[str]: List of file names that have been edited between the two commits.
     """
+    # Create a set to store unique file names that have been edited
+
     file_names = set()
+    # Get the differences (diff) between the source and target commits
+
     diff = repo.diff(source_commit, target_commit)
+    # Iterate through each patch in the diff
+
     for patch in diff:
+        # If the old file path is present, add it to the set
+
         if patch.delta.old_file.path:
             file_names.add(patch.delta.old_file.path)
+        # If the new file path is present, add it to the set
+
         if patch.delta.new_file.path:
             file_names.add(patch.delta.new_file.path)
     return list(file_names)

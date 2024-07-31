@@ -1,4 +1,3 @@
-
 import fire
 
 from almanack.report import repo_entropy_report
