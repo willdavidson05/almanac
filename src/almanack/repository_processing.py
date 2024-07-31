@@ -26,14 +26,13 @@ def process_entire_repo(repo_path: str, output_path: str) -> None:
     Returns:
         None: Saves the entropy data to a JSON file and prints it.
     """
-    temp_dir = tempfile.mkdtemp()
     try:
         repo_path = pathlib.Path(repo_path).resolve()
         repo = pygit2.Repository(str(repo_path))
 
         commits = get_commits(repo)
         most_recent_commit = commits[0]
-        first_commit = commits[-1]  # Get the first commit
+        first_commit = commits[-1]
 
         file_names = get_edited_files(repo, first_commit, most_recent_commit)
 
@@ -58,9 +57,6 @@ def process_entire_repo(repo_path: str, output_path: str) -> None:
 
     except Exception as e:
         print(f"Error processing repository {repo_path}: {e}")
-
-    finally:
-        shutil.rmtree(temp_dir)
 
 
 def process_repo_for_analysis(
