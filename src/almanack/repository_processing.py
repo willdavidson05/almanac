@@ -5,20 +5,25 @@ This module processes GitHub repositories
 import shutil
 import tempfile
 from datetime import datetime, timezone
+import pathlib
 
 import pygit2
-
-from .data_management import print_entropy_report, save_entropy_to_json
+from .report import repo_entropy_report
+from .data_management import save_entropy_to_json
 from .entropy import aggregate_entropy_calculation, calculate_normalized_entropy
 from .git_operations import clone_repository, get_commits, get_edited_files
 
 
-def process_repository(repo_url: str, output_path: str) -> None:
+import pathlib
+import shutil
+import tempfile
+
+def process_entire_repo(repo_path: str, output_path: str) -> None:
     """
-    Processes a GitHub repository URL to calculate entropy and other metadata.
+    Processes a local repository path to calculate entropy and other metadata.
 
     Args:
-        repo_url (str): The URL of the GitHub repository.
+        repo_path (str): The local path to the Git repository.
         output_path (str): Path to the output JSON file.
 
     Returns:
@@ -26,41 +31,44 @@ def process_repository(repo_url: str, output_path: str) -> None:
     """
     temp_dir = tempfile.mkdtemp()
     try:
-        repo_path = clone_repository(repo_url)
+        repo_path = pathlib.Path(repo_path).resolve()
         repo = pygit2.Repository(str(repo_path))
 
         commits = get_commits(repo)
         most_recent_commit = commits[0]
-        second_most_recent_commit = commits[1]
+        first_commit = commits[-1]  # Get the first commit
 
-        file_names = get_edited_files(
-            repo, second_most_recent_commit, most_recent_commit
-        )
+        file_names = get_edited_files(repo, first_commit, most_recent_commit)
 
         normalized_total_entropy = aggregate_entropy_calculation(
             repo_path,
-            str(second_most_recent_commit.id),
+            str(first_commit.id),
             str(most_recent_commit.id),
             file_names,
         )
 
         file_level_entropy = calculate_normalized_entropy(
             repo_path,
-            str(second_most_recent_commit.id),
+            str(first_commit.id),
             str(most_recent_commit.id),
             file_names,
         )
 
         save_entropy_to_json(
-            repo_url, file_level_entropy, normalized_total_entropy, output_path
+            str(repo_path),
+            normalized_total_entropy,
+            output_path
         )
-        print_entropy_report(output_path)
+
+        repo_entropy_report(output_path)
 
     except Exception as e:
-        print(f"Error processing repository {repo_url}: {e}")
+        print(f"Error processing repository {repo_path}: {e}")
 
     finally:
         shutil.rmtree(temp_dir)
+
+
 
 
 def process_repo_to_parquet(

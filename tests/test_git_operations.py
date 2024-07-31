@@ -8,6 +8,12 @@ import pygit2
 
 from almanack.git_operations import get_commits, get_loc_changed
 
+def test_clone_reopsitory():
+    pass
+def test_get_commits():
+    pass
+def test_get_edited_files():
+    pass
 
 def get_most_recent_commits(repo_path: pathlib.Path) -> tuple[str, str]:
     """
@@ -37,6 +43,7 @@ def test_get_loc_changed(
     """
 
     results = {}
+    
 
     for label, repo_path in repository_paths.items():
         # Extract two most recent commits: source and target

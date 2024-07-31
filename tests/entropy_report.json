@@ -1,36 +1,4 @@
 {
-    "repo_url": "https://github.com/software-gardening/almanack",
-    "total_normalized_entropy": 0.3304638637920318,
-    "file_level_entropy": {
-        "src/almanack/entropy.py": 0.023319870284294192,
-        "tests/conftest.py": 0.23700860233085208,
-        "tests/data/almanack/entropy/add_data.py": 0.44041690367428027,
-        "tests/data/almanack/entropy/add_entropy.py": 0.4931134157230758,
-        "tests/data/almanack/repo_setup/create_repo.py": 0.46909601985030797,
-        "tests/data/almanack/repo_setup/insert_code.py": 0.4149212958239656,
-        "tests/test_entropy.py": 0.37659389614979966,
-        "tests/test_git_parser.py": 0.18924090649967923
-    },
-    "5_files_with_most_entropy": [
-        [
-            "tests/data/almanack/entropy/add_entropy.py",
-            0.4931134157230758
-        ],
-        [
-            "tests/data/almanack/repo_setup/create_repo.py",
-            0.46909601985030797
-        ],
-        [
-            "tests/data/almanack/entropy/add_data.py",
-            0.44041690367428027
-        ],
-        [
-            "tests/data/almanack/repo_setup/insert_code.py",
-            0.4149212958239656
-        ],
-        [
-            "tests/test_entropy.py",
-            0.37659389614979966
-        ]
-    ]
+    "repo_path": "/tmp/tmpoocghsw2/repo",
+    "total_normalized_entropy": 0.0
 }

@@ -3,11 +3,9 @@ This module performs git operations
 """
 
 import pathlib
-import tempfile
 from typing import Dict, List
-
 import pygit2
-
+import tempfile
 
 def clone_repository(repo_url: str) -> pathlib.Path:
     """
@@ -24,7 +22,6 @@ def clone_repository(repo_url: str) -> pathlib.Path:
     pygit2.clone_repository(repo_url, str(repo_path))
     return repo_path
 
-
 def get_commits(repo: pygit2.Repository) -> List[pygit2.Commit]:
     """
     Retrieves the list of commits from the main branch.
@@ -36,13 +33,9 @@ def get_commits(repo: pygit2.Repository) -> List[pygit2.Commit]:
         List[pygit2.Commit]: List of commits in the repository.
     """
     head = repo.revparse_single("HEAD")
-    walker = repo.walk(
-        head.id, pygit2.GIT_SORT_NONE
-    )  # Use GIT_SORT_NONE to ensure all commits are included
+    walker = repo.walk(head.id, pygit2.GIT_SORT_NONE)  # Use GIT_SORT_NONE to ensure all commits are included
     commits = [commit for commit in walker]
-
     return commits
-
 
 def get_edited_files(
     repo: pygit2.Repository, source_commit: pygit2.Commit, target_commit: pygit2.Commit
@@ -66,7 +59,6 @@ def get_edited_files(
         if patch.delta.new_file.path:
             file_names.add(patch.delta.new_file.path)
     return list(file_names)
-
 
 def get_loc_changed(
     repo_path: pathlib.Path, source: str, target: str, file_names: List[str]

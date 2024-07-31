@@ -57,7 +57,6 @@ def calculate_normalized_entropy(
         )
         for file_name in loc_changes  # Iterate over each file in loc_changes dictionary
     }
-
     return entropy_calculation
 
 
@@ -91,5 +90,4 @@ def aggregate_entropy_calculation(
     # Normalize total entropy by the number of files edited between the two commits
     num_files = len(file_names)
     normalized_total_entropy = total_entropy / num_files if num_files > 0 else 0.0
-
     return normalized_total_entropy
