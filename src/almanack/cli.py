@@ -2,7 +2,6 @@
 Setup repo_entropy CLI through python-fire
 """
 
-
 import pathlib
 
 import fire

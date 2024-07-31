@@ -4,6 +4,7 @@ Test git operations functionality
 
 import pathlib
 from typing import Any
+
 import pygit2
 
 from almanack.git_operations import (
