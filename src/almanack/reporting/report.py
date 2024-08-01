@@ -12,6 +12,7 @@ def repo_entropy_report(output_path: str) -> None:
     Args:
         output_path (str): Path to the output JSON file.
     """
+    # Read .JSON file
     with open(output_path, "r") as json_file:
         data = json.load(json_file)
 
@@ -19,17 +20,14 @@ def repo_entropy_report(output_path: str) -> None:
     separator = "-" * 50
     title = "Entropy Report"
 
-    print(border)
-    print(f"{title:^50}")  # Centers the title
-    print(border)
-
-    # Print repository details
-    print(f"Repository Path: {data['repo_path']}")
-    print(
-        f"Total Repository Normalized Entropy: {data['total_normalized_entropy']:.4f}"
-    )
-
-    print(separator)
-
-    # Print the report footer
-    print(border)
+    # Format the report
+    report_content = f"""
+    {border}
+    {title:^50}
+    {border}
+    Repository Path: {data['repo_path']}
+    Total Repository Normalized Entropy: {data['total_normalized_entropy']:.4f}
+    {separator}
+    {border}
+    """
+    print(report_content)
