@@ -1,5 +1,5 @@
 """
-This module calculates software entropy
+This module calculates the amount of Software infromation entropy
 """
 
 import math
@@ -88,5 +88,7 @@ def aggregate_entropy_calculation(
 
     # Normalize total entropy by the number of files edited between the two commits
     num_files = len(file_names)
-    normalized_total_entropy = total_entropy / num_files if num_files > 0 else 0.0
+    normalized_total_entropy = (
+        total_entropy / num_files if num_files > 0 else 0.0
+    )  # Avoid division by zero (e.g., num_files = 0) and ensure valid entropy calculation
     return normalized_total_entropy

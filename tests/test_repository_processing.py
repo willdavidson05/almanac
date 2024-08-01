@@ -6,6 +6,7 @@ import pathlib
 import shutil
 import tempfile
 
+from almanack.report import repo_entropy_report
 from almanack.repository_processing import process_entire_repo
 
 
@@ -36,3 +37,5 @@ def test_process_entire_repo(repository_paths: dict[str, pathlib.Path]) -> None:
 
             # Check if the output file was created
             assert output_path.exists()
+
+            repo_entropy_report(str(output_path))

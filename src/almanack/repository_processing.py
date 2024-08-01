@@ -42,15 +42,14 @@ def process_entire_repo(repo_path: str, output_path: str) -> None:
             file_names,
         )
 
-        # Implement soon
-        # file_level_entropy = calculate_normalized_entropy(
-        #     repo_path,
-        #     str(first_commit.id),
-        #     str(most_recent_commit.id),
-        #     file_names,
-        # )
+        # Prepare the data structure
+        data = {
+            "repo_path": str(repo_path),
+            "total_normalized_entropy": normalized_total_entropy,
+        }
 
-        save_data_to_json(str(repo_path), normalized_total_entropy, output_path)
+        # Save the data to a JSON file
+        save_data_to_json(data, output_path)
 
     except Exception as e:
         print(f"Error processing repository {repo_path}: {e}")

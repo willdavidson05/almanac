@@ -42,10 +42,10 @@ def get_commits(repo: pygit2.Repository) -> List[pygit2.Commit]:
     head = repo.revparse_single("HEAD")
     # Create a walker to iterate over commits starting from the HEAD
     walker = repo.walk(
-        head.id, pygit2.GIT_SORT_NONE
-    )  # Use GIT_SORT_NONE to ensure all commits are included
+        head.id, pygit2.enums.SortMode.NONE
+    )  #  SortMode.NONE traverses commits in natural order; no sorting applied.
     # Collect all commits from the walker into a list
-    commits = [commit for commit in walker]
+    commits = list(walker)
     return commits
 
 
@@ -53,7 +53,7 @@ def get_edited_files(
     repo: pygit2.Repository, source_commit: pygit2.Commit, target_commit: pygit2.Commit
 ) -> List[str]:
     """
-    Finds all files that have been edited between two specific commits.
+    Finds all files that have been edited, added, or deleted between two specific commits.
 
     Args:
         repo (pygit2.Repository): The Git repository.
@@ -61,7 +61,7 @@ def get_edited_files(
         target_commit (pygit2.Commit): The target commit.
 
     Returns:
-        List[str]: List of file names that have been edited between the two commits.
+        List[str]: List of file names that have been edited, added, or deleted between the two commits.
     """
     # Create a set to store unique file names that have been edited
     file_names = set()
