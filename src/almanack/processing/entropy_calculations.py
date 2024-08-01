@@ -59,7 +59,7 @@ def calculate_normalized_entropy(
     return entropy_calculation
 
 
-def aggregate_entropy_calculation(
+def calculate_aggregate_entropy(
     repo_path: pathlib.Path,
     source_commit: str,
     target_commit: str,

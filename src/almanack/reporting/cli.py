@@ -14,8 +14,8 @@ def process_repo_entropy(
     repo_path: str, output_path: str = "entropy_report.json"
 ) -> None:
     """
-    CLI entry point to process a repository and generate an entropy report based on the change
-    between commits. The results are output to a .JSON file
+    CLI entry point to process a repository for calculating entropy changes between commits and 
+    generate a report. The results are output to a .JSON file.
 
     Args:
         repo_path (str): The local path to the Git repository.

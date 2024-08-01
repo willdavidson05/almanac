@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 import pygit2
 from typing import Optional, Tuple
 from .data_management import save_data_to_json
-from .entropy import aggregate_entropy_calculation
+from .entropy_calculations import calculate_aggregate_entropy
 from .git_operations import clone_repository, get_commits, get_edited_files
 
 
@@ -39,7 +39,7 @@ def process_entire_repo(repo_path: str, output_path: str) -> None:
         file_names = get_edited_files(repo, first_commit, most_recent_commit)
 
         # Calculate the normalized total entropy for the repository
-        normalized_total_entropy = aggregate_entropy_calculation(
+        normalized_total_entropy = calculate_aggregate_entropy(
             repo_path,
             str(first_commit.id),
             str(most_recent_commit.id),
@@ -106,7 +106,7 @@ def process_repo_for_analysis(
         # Get a list of all files that have been edited between the commits
         file_names = get_edited_files(repo, commits)
         # Calculate the normalized entropy for the changes between the first and most recent commits
-        normalized_total_entropy = aggregate_entropy_calculation(
+        normalized_total_entropy = calculate_aggregate_entropy(
             repo_path, str(first_commit.id), str(most_recent_commit.id), file_names
         )
 
