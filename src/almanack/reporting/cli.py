@@ -6,15 +6,15 @@ import pathlib
 
 import fire
 
-from almanack.reporting.report import repo_entropy_report
 from almanack.processing.repository_processing import process_entire_repo
+from almanack.reporting.report import repo_entropy_report
 
 
 def process_repo_entropy(
     repo_path: str, output_path: str = "entropy_report.json"
 ) -> None:
     """
-    CLI entry point to process a repository for calculating entropy changes between commits and 
+    CLI entry point to process a repository for calculating entropy changes between commits and
     generate a report. The results are output to a .JSON file.
 
     Args:

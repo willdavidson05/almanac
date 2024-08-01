@@ -6,9 +6,10 @@ import pathlib
 import shutil
 import tempfile
 from datetime import datetime, timezone
+from typing import Optional, Tuple
 
 import pygit2
-from typing import Optional, Tuple
+
 from .data_management import save_data_to_json
 from .entropy_calculations import calculate_aggregate_entropy
 from .git_operations import clone_repository, get_commits, get_edited_files
@@ -91,8 +92,8 @@ def process_repo_for_analysis(
         time_of_existence = (
             most_recent_commit.commit_time - first_commit.commit_time
         ) // (24 * 3600)
-        # Calculate the time span between commits in days. Using UTC for date conversion ensures uniformity 
-        # and avoids issues related to different time zones and daylight saving changes.        
+        # Calculate the time span between commits in days. Using UTC for date conversion ensures uniformity
+        # and avoids issues related to different time zones and daylight saving changes.
         first_commit_date = (
             datetime.fromtimestamp(first_commit.commit_time, tz=timezone.utc)
             .date()

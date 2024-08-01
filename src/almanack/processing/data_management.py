@@ -1,5 +1,5 @@
 """
-This module assists with data managment the almanack package.
+This module assists with data management the almanack package.
 """
 
 import json
