@@ -20,25 +20,27 @@ def process_repo_entropy(repo_path: str, output_path: str = "entropy_report.json
         output_path (str, optional): Path to the output JSON file. Default is "repo_entropy_report.json".
     """
 
-    repo_path = pathlib.Path.cwd()  # Use the current working directory
-
     repo_path = pathlib.Path(repo_path).resolve()
 
     # Check if the directory contains a Git repository
     if not repo_path.exists() or not (repo_path / ".git").exists():
         raise FileNotFoundError(f"The directory {repo_path} is not a repository")
 
-    # Process the repository and generate the JSON file
+     # Process the repository and generate the JSON file
     process_entire_repo(str(repo_path), output_path)
 
-    # Generate and print the report
+    # Generate and return the report
     repo_entropy_report(output_path)
-
-    # Delete the JSON file after the report is generated and printed
-    json_path = pathlib.Path(output_path)
-    if json_path.exists():
-        json_path.unlink()  # Remove the file
+    
+    # Return the path to the generated JSON report file
+    return output_path
 
 
 if __name__ == "__main__":
+    """
+    Setup the CLI with python-fire for the almanack package.
+
+    This allows the function `process_repo_entropy` to be ran through the 
+    command line interface.
+    """
     fire.Fire(process_repo_entropy)

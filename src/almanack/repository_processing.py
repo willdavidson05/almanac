@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 
 import pygit2
 
-from .data_management import save_entropy_to_json
+from .data_management import save_data_to_json
 from .entropy import aggregate_entropy_calculation
 from .git_operations import clone_repository, get_commits, get_edited_files
 
@@ -50,7 +50,7 @@ def process_entire_repo(repo_path: str, output_path: str) -> None:
         #     file_names,
         # )
 
-        save_entropy_to_json(str(repo_path), normalized_total_entropy, output_path)
+        save_data_to_json(str(repo_path), normalized_total_entropy, output_path)
 
     except Exception as e:
         print(f"Error processing repository {repo_path}: {e}")
