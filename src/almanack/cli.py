@@ -1,5 +1,5 @@
 """
-Setup repo_entropy CLI through python-fire
+Setup process_repo_entropy CLI through python-fire
 """
 
 import pathlib
@@ -10,13 +10,14 @@ from almanack.report import repo_entropy_report
 from almanack.repository_processing import process_entire_repo
 
 
-def repo_entropy(repo_path: str, output_path: str = "entropy_report.json") -> None:
+def process_repo_entropy(repo_path: str, output_path: str = "entropy_report.json") -> None:
     """
-    CLI entry point to process a repository and generate an entropy report.
+    CLI entry point to process a repository and generate an entropy report based on the change 
+    between commits. The results are output to a .JSON file
 
     Args:
         repo_path (str): The local path to the Git repository.
-        output_path (str, optional): Path to the output JSON file.Currently is "entropy_report.json".
+        output_path (str, optional): Path to the output JSON file. Default is "repo_entropy_report.json".
     """
 
     repo_path = pathlib.Path.cwd()  # Use the current working directory
@@ -25,7 +26,7 @@ def repo_entropy(repo_path: str, output_path: str = "entropy_report.json") -> No
 
     # Check if the directory contains a Git repository
     if not repo_path.exists() or not (repo_path / ".git").exists():
-        raise FileNotFoundError
+        raise FileNotFoundError(f"The directory {repo_path} is not a repository")
 
     # Process the repository and generate the JSON file
     process_entire_repo(str(repo_path), output_path)
@@ -40,4 +41,4 @@ def repo_entropy(repo_path: str, output_path: str = "entropy_report.json") -> No
 
 
 if __name__ == "__main__":
-    fire.Fire(repo_entropy)
+    fire.Fire(process_repo_entropy)
