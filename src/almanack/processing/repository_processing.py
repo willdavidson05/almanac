@@ -10,21 +10,19 @@ from typing import Optional, Tuple
 
 import pygit2
 
-from .data_management import save_data_to_json
 from .entropy_calculations import calculate_aggregate_entropy
 from .git_operations import clone_repository, get_commits, get_edited_files
 
 
-def process_entire_repo(repo_path: str, output_path: str) -> None:
+def process_entire_repo(repo_path: str) -> None:
     """
     Processes a repository path to calculate entropy.
 
     Args:
         repo_path (str): The local path to the Git repository.
-        output_path (str): Path to the output JSON file.
 
     Returns:
-        None: Saves the entropy data to a JSON file.
+        str: JSON string with the entropy data.
     """
     try:
         # Convert repo_path to an absolute path and initialize the repository
@@ -52,13 +50,16 @@ def process_entire_repo(repo_path: str, output_path: str) -> None:
             "repo_path": str(repo_path),
             "total_normalized_entropy": normalized_total_entropy,
         }
-
-        # Save the data to a JSON file
-        save_data_to_json(data, output_path)
+        
+        return data
 
     except Exception as e:
-        # If processing fails, return an error
-        print(f"Error processing repository {repo_path}: {e}")
+        # If processing fails, return an error dictionary
+        error_data = {
+            "repo_path": str(repo_path),
+            "error": str(e)
+        }
+        return error_data
 
 
 def process_repo_for_analysis(

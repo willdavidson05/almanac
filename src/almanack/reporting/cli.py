@@ -3,16 +3,14 @@ Setup process_repo_entropy CLI through python-fire
 """
 
 import pathlib
-
+import json
 import fire
 
 from almanack.processing.repository_processing import process_entire_repo
 from almanack.reporting.report import repo_entropy_report
 
 
-def process_repo_entropy(
-    repo_path: str, output_path: str = "entropy_report.json"
-) -> None:
+def process_repo_entropy(repo_path: str) -> None:
     """
     CLI entry point to process a repository for calculating entropy changes between commits and
     generate a report. The results are output to a .JSON file.
@@ -28,14 +26,17 @@ def process_repo_entropy(
     if not repo_path.exists() or not (repo_path / ".git").exists():
         raise FileNotFoundError(f"The directory {repo_path} is not a repository")
 
-    # Process the repository and generate the JSON file
-    process_entire_repo(str(repo_path), output_path)
+    # Process the repository and get the dictionary
+    entropy_data = process_entire_repo(str(repo_path))
 
-    # Generate and return the report
-    repo_entropy_report(output_path)
+    # Generate and print the report from the dictionary
+    repo_entropy_report(entropy_data)
 
-    # Return the path to the generated JSON report file
-    return output_path
+    # Convert the dictionary to a JSON string
+    json_string = json.dumps(entropy_data, indent=4)
+
+    # Return the JSON string
+    return json_string
 
 
 if __name__ == "__main__":

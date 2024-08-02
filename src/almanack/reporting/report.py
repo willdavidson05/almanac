@@ -5,16 +5,13 @@ This module creates entropy reports
 import json
 
 
-def repo_entropy_report(output_path: str) -> None:
+def repo_entropy_report(data: str) -> None:
     """
-    Prints the entropy values from a JSON file.
+    Prints the entropy values from a JSON string.
 
     Args:
-        output_path (str): Path to the output JSON file.
+        json_string (str): JSON string with the entropy data.
     """
-    # Read .JSON file
-    with open(output_path, "r") as json_file:
-        data = json.load(json_file)
 
     border = "=" * 50
     separator = "-" * 50

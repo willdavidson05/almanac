@@ -14,12 +14,6 @@ def test_process_entire_repo(repository_paths: dict[str, pathlib.Path]) -> None:
     """
     Test process_entire_repo function.
     """
-    # Define the relative path for the output file within the target directory
-    relative_output_path = "data/almanack/entropy_report.json"
-
-    # Resolve the absolute path for the output file relative to the test directory
-    output_path = pathlib.Path(__file__).parent / relative_output_path
-
     for _, repo_path in repository_paths.items():
         # Create a temporary directory for testing
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -28,14 +22,11 @@ def test_process_entire_repo(repository_paths: dict[str, pathlib.Path]) -> None:
             # Copy the contents of the original repository to the temporary directory
             shutil.copytree(repo_path, temp_repo_path)
 
-            # Ensure the output directory exists
-            output_dir = output_path.parent
-            output_dir.mkdir(parents=True, exist_ok=True)
+            # Call the function with the temporary repository path
+            entropy_data = process_entire_repo(str(temp_repo_path))
 
-            # Call the function with the temporary repository path and output path
-            process_entire_repo(temp_repo_path, str(output_path))
+             # Check if the entropy data is not empty
+            assert entropy_data
 
-            # Check if the output file was created
-            assert output_path.exists()
-
-            repo_entropy_report(str(output_path))
+            # Call the function to print the entropy report from the JSON string
+            repo_entropy_report(entropy_data)
