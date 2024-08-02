@@ -14,11 +14,10 @@ from almanack.reporting.report import repo_entropy_report
 def process_repo_entropy(repo_path: str) -> None:
     """
     CLI entry point to process a repository for calculating entropy changes between commits and
-    generate a report. The results are output to a .JSON file.
+    generate a report.
 
     Args:
         repo_path (str): The local path to the Git repository.
-        output_path (str, optional): Path to the output JSON file. Default is "repo_entropy_report.json".
     """
 
     repo_path = pathlib.Path(repo_path).resolve()

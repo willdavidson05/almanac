@@ -22,7 +22,7 @@ def process_entire_repo(repo_path: str) -> None:
         repo_path (str): The local path to the Git repository.
 
     Returns:
-        str: JSON string with the entropy data.
+        Dict: Key Value pair containing repository path and normalized entropy
     """
     try:
         # Convert repo_path to an absolute path and initialize the repository

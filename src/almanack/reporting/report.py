@@ -2,13 +2,18 @@
 This module creates entropy reports
 """
 
+from typing import Dict
 
-def repo_entropy_report(data: str) -> None:
+
+def repo_entropy_report(data: Dict[str, any]) -> str:
     """
-    Prints the entropy values from a JSON string.
+    Returns the formatted entropy report as a string.
 
     Args:
-        json_string (str): JSON string with the entropy data.
+        data (Dict[str, any]): Dictionary with the entropy data.
+
+    Returns:
+        str: Formatted entropy report.
     """
 
     border = "=" * 50
