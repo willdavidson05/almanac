@@ -3,7 +3,6 @@ This module creates entropy reports
 """
 
 
-
 def repo_entropy_report(data: str) -> None:
     """
     Prints the entropy values from a JSON string.
@@ -26,4 +25,4 @@ def repo_entropy_report(data: str) -> None:
     {separator}
     {border}
     """
-    print(report_content)
+    return report_content

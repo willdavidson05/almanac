@@ -31,13 +31,15 @@ def process_repo_entropy(repo_path: str) -> None:
     entropy_data = process_entire_repo(str(repo_path))
 
     # Generate and print the report from the dictionary
-    repo_entropy_report(entropy_data)
+    report_content = repo_entropy_report(entropy_data)
 
     # Convert the dictionary to a JSON string
     json_string = json.dumps(entropy_data, indent=4)
 
-    # Return the JSON string
-    return json_string
+    print(report_content)
+
+    # Return the JSON string and report content
+    return json_string, report_content
 
 
 if __name__ == "__main__":
