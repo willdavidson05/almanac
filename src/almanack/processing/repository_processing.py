@@ -50,15 +50,12 @@ def process_entire_repo(repo_path: str) -> None:
             "repo_path": str(repo_path),
             "total_normalized_entropy": normalized_total_entropy,
         }
-        
+
         return data
 
     except Exception as e:
         # If processing fails, return an error dictionary
-        error_data = {
-            "repo_path": str(repo_path),
-            "error": str(e)
-        }
+        error_data = {"repo_path": str(repo_path), "error": str(e)}
         return error_data
 
 

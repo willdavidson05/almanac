@@ -25,7 +25,7 @@ def test_process_entire_repo(repository_paths: dict[str, pathlib.Path]) -> None:
             # Call the function with the temporary repository path
             entropy_data = process_entire_repo(str(temp_repo_path))
 
-             # Check if the entropy data is not empty
+            # Check if the entropy data is not empty
             assert entropy_data
 
             # Call the function to print the entropy report from the JSON string

@@ -2,7 +2,6 @@
 This module creates entropy reports
 """
 
-import json
 
 
 def repo_entropy_report(data: str) -> None:

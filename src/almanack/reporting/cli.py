@@ -2,8 +2,9 @@
 Setup process_repo_entropy CLI through python-fire
 """
 
-import pathlib
 import json
+import pathlib
+
 import fire
 
 from almanack.processing.repository_processing import process_entire_repo
