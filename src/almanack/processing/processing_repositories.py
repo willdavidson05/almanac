@@ -10,7 +10,7 @@ from typing import Optional, Tuple
 
 import pygit2
 
-from .entropy_calculations import calculate_aggregate_entropy
+from .calculate_entropy import calculate_aggregate_entropy
 from .git_operations import clone_repository, get_commits, get_edited_files
 
 

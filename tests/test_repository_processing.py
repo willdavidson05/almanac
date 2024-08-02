@@ -6,7 +6,7 @@ import pathlib
 import shutil
 import tempfile
 
-from almanack.processing.repository_processing import process_entire_repo
+from almanack.processing.processing_repositories import process_entire_repo
 
 
 def test_process_entire_repo(repository_paths: dict[str, pathlib.Path]) -> None:

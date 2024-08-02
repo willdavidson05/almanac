@@ -7,7 +7,7 @@ import pathlib
 
 import fire
 
-from almanack.processing.repository_processing import process_entire_repo
+from almanack.processing.processing_repositories import process_entire_repo
 from almanack.reporting.report import repo_entropy_report
 
 
