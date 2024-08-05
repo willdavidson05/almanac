@@ -38,7 +38,7 @@ def process_repo_entropy(repo_path: str) -> None:
     print(report_content)
 
     # Return the JSON string and report content
-    return json_string, report_content
+    return json_string
 
 
 if __name__ == "__main__":

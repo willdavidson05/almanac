@@ -55,8 +55,7 @@ def process_entire_repo(repo_path: str) -> None:
 
     except Exception as e:
         # If processing fails, return an error dictionary
-        error_data = {"repo_path": str(repo_path), "error": str(e)}
-        return error_data
+        return {"repo_path": str(repo_path), "error": str(e)}
 
 
 def process_repo_for_analysis(
