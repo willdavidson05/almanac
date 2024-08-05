@@ -6,7 +6,6 @@ import pathlib
 
 import git
 
-
 from .insert_code import add_LOC
 
 
