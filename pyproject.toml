@@ -45,7 +45,8 @@ pygithub = "^2.3.0"
 jupyterlab-spellchecker = "^0.8.4"
 
 [tool.poetry.scripts]
-process_repo_entropy = "almanack.cli:process_repo_entropy"
+almanack = "almanack.cli:check"
+
 
 
 [tool.isort]

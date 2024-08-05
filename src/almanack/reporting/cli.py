@@ -41,11 +41,18 @@ def process_repo_entropy(repo_path: str) -> None:
     return json_string
 
 
+def check() -> None:
+    """
+    Run the CLI command to process repository entropy using python-fire.
+    """
+    fire.Fire(process_repo_entropy)
+
+
 if __name__ == "__main__":
     """
     Setup the CLI with python-fire for the almanack package.
 
-    This allows the function `process_repo_entropy` to be ran through the
+    This allows the function `check` to be ran through the
     command line interface.
     """
-    fire.Fire(process_repo_entropy)
+    check()
