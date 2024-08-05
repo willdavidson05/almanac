@@ -1,11 +1,11 @@
 """
-Testing cli.py functionality
+Testing report.py functionality
 """
 
 import json
 import pathlib
 
-from almanack.reporting.cli import process_repo_entropy
+from almanack.reporting.report import process_repo_entropy
 
 
 def test_process_repo_entropy(repository_paths: dict[str, pathlib.Path]) -> None:
@@ -22,5 +22,6 @@ def test_process_repo_entropy(repository_paths: dict[str, pathlib.Path]) -> None
         entropy_data = json.loads(json_string)
         # Check for expected keys in the JSON output
         expected_keys = ["repo_path", "total_normalized_entropy"]
-        for key in expected_keys:
-            assert key in entropy_data, f"Missing key {key} in JSON output for {label}"
+        # Check if all expected keys are present in the entropy_data
+        assert all(key in entropy_data for key in expected_keys)
+
