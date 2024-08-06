@@ -6,7 +6,6 @@ import json
 import pathlib
 from typing import Dict
 
-
 from almanack.processing.processing_repositories import process_entire_repo
 
 
