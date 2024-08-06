@@ -47,8 +47,6 @@ jupyterlab-spellchecker = "^0.8.4"
 [tool.poetry.scripts]
 almanack = "almanack.reporting.cli:trigger"
 
-
-
 [tool.isort]
 profile = "black"
 

@@ -303,6 +303,3 @@ dist
 
 # ignore pdf builds
 /src/_pdfbuild
-
-# Ignore JSON reports
-/tests/data/almanack/*.json
