@@ -1,16 +1,17 @@
 """
-Setup process_repo_entropy CLI through python-fire
+Setup Entropy Report CLI through python-fire
 """
+
 import fire
 
-from almanack.reporting.report import process_repo_entropy
+from almanack.reporting import report
 
 
-def run_cli() -> None:
+def trigger() -> None:
     """
-    Run the CLI command to process repository entropy using python-fire.
+    Run the CLI command to process `report.py` using python-fire.
     """
-    fire.Fire(process_repo_entropy)
+    fire.Fire(report)
 
 
 if __name__ == "__main__":
@@ -20,4 +21,4 @@ if __name__ == "__main__":
     This allows the function `check` to be ran through the
     command line interface.
     """
-    run_cli()
+    trigger()

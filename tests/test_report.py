@@ -24,4 +24,3 @@ def test_process_repo_entropy(repository_paths: dict[str, pathlib.Path]) -> None
         expected_keys = ["repo_path", "total_normalized_entropy"]
         # Check if all expected keys are present in the entropy_data
         assert all(key in entropy_data for key in expected_keys)
-

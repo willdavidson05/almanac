@@ -45,7 +45,7 @@ pygithub = "^2.3.0"
 jupyterlab-spellchecker = "^0.8.4"
 
 [tool.poetry.scripts]
-almanack = "almanack.cli:check"
+almanack = "almanack.reporting.cli:trigger"
 
 
 

@@ -1,9 +1,11 @@
 """
 This module creates entropy reports
 """
-import pathlib
+
 import json
+import pathlib
 from typing import Dict
+
 
 from almanack.processing.processing_repositories import process_entire_repo
 
@@ -17,7 +19,7 @@ def process_repo_entropy(repo_path: str) -> None:
         repo_path (str): The local path to the Git repository.
     """
 
-    repo_path = pathlib.Path(repo_path).resolve()
+    repo_path = pathlib.Path(repo_path)
 
     # Check if the directory contains a Git repository
     if not repo_path.exists() or not (repo_path / ".git").exists():
@@ -36,6 +38,7 @@ def process_repo_entropy(repo_path: str) -> None:
 
     # Return the JSON string and report content
     return json_string
+
 
 def repo_entropy_report(data: Dict[str, any]) -> str:
     """
