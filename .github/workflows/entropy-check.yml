@@ -1,0 +1,46 @@
+---
+name: entropy-check
+
+on:
+  push:
+    branches:
+      - main
+      - GitHub-Action
+  pull_request:
+    branches:
+      - main
+      - GitHub-Action
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:    
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install python env
+        uses: ./.github/actions/install-python-env
+
+      - name: Process repository entropy
+        run: poetry run almanack process_repo_entropy . > entropy_report.txt
+
+      - name: Format Entropy Report
+        id: format_report
+        run: |
+          CONTENT=$(cat entropy_report.txt | sed 's/"/\\"/g' | awk '{print}' ORS='\n')
+          echo "$CONTENT"
+          echo "REPORT_CONTENT<<EOF" >> $GITHUB_ENV
+          echo "$CONTENT" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Comment on Pull Request
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            Entropy Report:
+            ${{ env.REPORT_CONTENT }}
+          comment_tag: execution
+          mode: recreate
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
